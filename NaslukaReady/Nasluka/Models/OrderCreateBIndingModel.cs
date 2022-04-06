@@ -10,16 +10,15 @@ namespace Nasluka.Models
         public int Id { get; set; }
 
 
-        public string CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
+       
+        public decimal Price { get; set; }
 
 
         public int CountProducts { get; set; }
 
 
-        public string OrderId { get; set; }
-
-
-        public decimal Product { get; set; }
+        public int ProductId { get; set; }
 
 
     }
