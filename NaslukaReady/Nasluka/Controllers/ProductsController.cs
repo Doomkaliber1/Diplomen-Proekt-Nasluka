@@ -9,6 +9,7 @@ using Nasluka.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Nasluka.Controllers
@@ -76,6 +77,7 @@ namespace Nasluka.Controllers
                    Id = productFromDb.Id,
                    Name = productFromDb.Name,
                    CategoryId = productFromDb.CategoryId,
+                   CategoryName = productFromDb.Category.Name,
                    Image = productFromDb.Image,
                    Price = productFromDb.Price,
                    Quantity = productFromDb.Quantity,
@@ -185,6 +187,7 @@ namespace Nasluka.Controllers
                 return View();
             }
         }
+        
+        }
     }
     
-}

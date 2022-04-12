@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Nasluka.Data;
 using Nasluka.Entities;
@@ -32,6 +33,7 @@ namespace Nasluka.Controllers
         }
 
         // GET: OrdersController/Create
+        [Authorize]
         public ActionResult Create(int? id)
         {
            
@@ -56,6 +58,7 @@ namespace Nasluka.Controllers
         }
 
         // POST: OrdersController/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(OrderCreateBIndingModel bindingModel)
@@ -86,15 +89,17 @@ namespace Nasluka.Controllers
             }
             return View(); //za da se vidi pak formata
         }
-    
+
 
         // GET: OrdersController/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
             return View();
         }
 
         // POST: OrdersController/Edit/5
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -110,12 +115,14 @@ namespace Nasluka.Controllers
         }
 
         // GET: OrdersController/Delete/5
+        [Authorize]
         public ActionResult Delete(int id)
         {
             return View();
         }
 
         // POST: OrdersController/Delete/5
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

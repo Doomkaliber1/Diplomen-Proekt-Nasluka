@@ -18,6 +18,7 @@ namespace Nasluka.Infrastructure
 
             var service = serviceScope.ServiceProvider;
             var data = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            SeedCategories(data);
            
 
             await RoleSeeder(service);

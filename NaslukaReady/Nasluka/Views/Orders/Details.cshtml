@@ -4,7 +4,7 @@
     ViewData["Title"] = "Order";
 }
 
-<h1>Create</h1>
+<h1>Details</h1>
 
 <h3>Are you sure you want to order this?</h3>
 <div>
@@ -31,6 +31,6 @@
     <form asp-action="Create" asp-controller="Orders">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Order" class="btn btn-danger" /> |
-        <a asp-action="All">Back to List</a>
+       
     </form>
 </div>

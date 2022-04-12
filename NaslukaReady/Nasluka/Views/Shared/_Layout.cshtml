@@ -32,10 +32,10 @@
                                         @if ((this.User.Identity.IsAuthenticated) && (this.User.IsInRole("Administrator")))
                                         {
                                             <li class="nav-item">
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Clients" asp-action="AllClients 👥"></a>
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Clients" asp-action="Всички клиенти 👥"></a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Create">Create ➕</a>
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Create">Добавяне ➕</a>
 
                                             </li>
                                            
@@ -50,11 +50,11 @@
                                                        data-toggle="dropdown"
                                                        aria-haspopup="true"
                                                        aria-expanded="false">
-                                                        Clients 👥
+                                                        Клиенти 👥
                                                     </a>
 
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                        <a class="dropdown-item" href="/Clients/AllClients">All                                     Clients👥<a>
+                                                        <a class="dropdown-item" href="/Clients/AllClients">Всички                                     Клиенти 👥<a>
                                                     </div>
 
                                                 </div>
