@@ -6,6 +6,7 @@ using Nasluka.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Nasluka.Controllers
@@ -33,6 +34,7 @@ namespace Nasluka.Controllers
         // GET: OrdersController/Create
         public ActionResult Create(int? id)
         {
+           
             if (id == null)
             {
                 return NotFound();
@@ -47,6 +49,7 @@ namespace Nasluka.Controllers
             {
                 ProductId = item.Id,
                 Price = item.Price,
+                
 
             };
             return View(order);
@@ -57,19 +60,26 @@ namespace Nasluka.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(OrderCreateBIndingModel bindingModel)
         {
+            string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = this.context.Users.SingleOrDefault(u => u.Id == currentUserId);
+            var product = this.context.Products.SingleOrDefault(e => e.Id == bindingModel.ProductId);
+            if (user == null || product == null || product.Quantity < bindingModel.CountProducts)
+            {
+                // ако потребителят не съществува или продуктът не съществува или няма достатъчно наличност
+                return this.RedirectToAction("All", "Products"); //направи го да отива в друга страница като при Success
+            }
             if (ModelState.IsValid)
             {
-                var item = context.Products.Find(bindingModel.ProductId);
-                if (item == null)
-                {
-                    return this.RedirectToAction("Create");
-                }
                 Order order = new Order
                 {
                     CountProducts = bindingModel.CountProducts,
                     ProductId = bindingModel.ProductId,
                     CreatedOn = DateTime.Now,
+                    UserId=currentUserId
                 };
+                product.Quantity -= bindingModel.CountProducts; //намаляваме наличността на продукта
+                this.context.Products.Update(product);
+
                 context.Orders.Add(order);
                 context.SaveChanges();
                 return this.RedirectToAction("All", "Products");

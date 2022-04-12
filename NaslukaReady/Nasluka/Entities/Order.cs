@@ -21,7 +21,7 @@ namespace Nasluka.Entities
         public DateTime CreatedOn { get; set; }
 
         [Required]
-        [MinLength(1)]
+        [Range(1,100)]
         
         public int CountProducts { get; set; }
 
@@ -34,5 +34,13 @@ namespace Nasluka.Entities
 
         [Required]
         public virtual Product Product { get; set; }
+
+        public decimal TotalPrice
+        {
+            get
+            {
+                return CountProducts * Product.Price;
+            }
+        }
     }
 }

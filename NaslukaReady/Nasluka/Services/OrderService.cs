@@ -21,7 +21,8 @@ namespace Nasluka.Services
             Order item = new Order
             {
                 ProductId = productId,
-                CountProducts = countProducts
+                CountProducts = countProducts,
+                CreatedOn=DateTime.Now
             };
 
             _context.Orders.Add(item);
