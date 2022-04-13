@@ -14,12 +14,13 @@ using System.Threading.Tasks;
 
 namespace Nasluka.Controllers
 {
-   
+
     public class ProductsController : Controller
     {
         public readonly ApplicationDbContext context;
         public readonly ICategoryService _categoryService;
         public readonly IProductService _productService;
+
 
         public ProductsController(ApplicationDbContext context, ICategoryService categoryService, IProductService productService)
         {
@@ -31,7 +32,7 @@ namespace Nasluka.Controllers
         public ActionResult Create()
         {
             var product = new ProductCreateViewModel();
-            product.Categories= _categoryService.GetCategories()
+            product.Categories = _categoryService.GetCategories()
                 .Select(c => new CategoryChooseViewModel()
                 {
                     Id = c.Id,
@@ -73,7 +74,7 @@ namespace Nasluka.Controllers
         {
             List<ProductAllViewModel> products = _productService.GetProducts()
                .Select(productFromDb => new ProductAllViewModel
-                       {
+               {
                    Id = productFromDb.Id,
                    Name = productFromDb.Name,
                    CategoryId = productFromDb.CategoryId,
@@ -85,7 +86,7 @@ namespace Nasluka.Controllers
             return this.View(products);
         }
         [Authorize(Roles = "Administrator")]
-        
+
         public ActionResult Details(int id)
         {
             Product item = _productService.GetProductById(id);
@@ -103,7 +104,7 @@ namespace Nasluka.Controllers
                 Image = item.Image,
                 Quantity = item.Quantity
             };
-            return View(product);   
+            return View(product);
         }
 
         [Authorize(Roles = "Administrator")]
@@ -114,15 +115,15 @@ namespace Nasluka.Controllers
             {
                 return NotFound();
             }
-           ProductCreateViewModel product = new ProductCreateViewModel()
+            ProductCreateViewModel product = new ProductCreateViewModel()
             {
-               Id = item.Id,
-               Name = item.Name,
-               Description = item.Description,
-               Price = item.Price,
-               Image = item.Image,
-               Quantity = item.Quantity
-           };
+                Id = item.Id,
+                Name = item.Name,
+                Description = item.Description,
+                Price = item.Price,
+                Image = item.Image,
+                Quantity = item.Quantity
+            };
             product.Categories = _categoryService.GetCategories()
                 .Select(c => new CategoryChooseViewModel()
                 {
@@ -177,8 +178,8 @@ namespace Nasluka.Controllers
         public ActionResult Delete(int id, IFormCollection collection)
         {
             var deleted = _productService.RemoveById(id);
-           
-                if (deleted)
+
+            if (deleted)
             {
                 return RedirectToAction("All", "Products");
             }
@@ -187,7 +188,38 @@ namespace Nasluka.Controllers
                 return View();
             }
         }
-        
+
+        public ActionResult My()
+        {
+                 string currentUserId =
+                this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                 List<OrderListingViewModel> reservations = this._reservationService.GetReservations()
+                  .Where(o => o.Client.Id == currentUserId)
+                  .Select(item =>new OrderListingViewModel()
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            CreatedOn = item.CreatedOn,
+                            CountProducts = item.CountProducts,
+                            UserId = item.UserId,
+                            ProductId = item.ProductId,
+                             }).ToList();
+                             return View(reservations);
         }
+      
+   
+
     }
+}
+
+        
+        
+       
+   
+
+
+
+      
+   
+
     

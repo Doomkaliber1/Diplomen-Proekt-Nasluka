@@ -9,7 +9,7 @@ namespace Nasluka.Models
     public class OrderCreateBIndingModel
     {
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
 
         public DateTime CreatedOn { get; set; }

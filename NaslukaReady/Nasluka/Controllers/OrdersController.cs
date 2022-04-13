@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Nasluka.Abstractions;
 using Nasluka.Data;
 using Nasluka.Entities;
 using Nasluka.Models;
+using Nasluka.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +17,30 @@ namespace Nasluka.Controllers
     public class OrdersController : Controller
     {
         private readonly ApplicationDbContext context;
+        private readonly IOrderService _orderService;
 
-        public OrdersController(ApplicationDbContext context)
+        public OrdersController(ApplicationDbContext context, IOrderService orderService)
         {
             this.context = context;
+            _orderService = orderService;
         }
+
+
+
         // GET: OrdersController
         public ActionResult Index()
         {
-            return View();
+            List<OrderListingViewModel> ordersFromDb = _orderService.GetOrders()
+              .Select(item => new OrderListingViewModel()
+              {
+                  Id = item.Id,
+                  CreatedOn = item.CreatedOn,
+                  CountProducts = item.CountProducts,
+                  UserId = item.UserId,
+                  ProductId = item.ProductId,
+                  Product = item.Product
+              }).ToList();
+            return View(ordersFromDb);
         }
 
         // GET: OrdersController/Details/5
