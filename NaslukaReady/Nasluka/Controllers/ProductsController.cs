@@ -189,23 +189,7 @@ namespace Nasluka.Controllers
             }
         }
 
-        public ActionResult My()
-        {
-                 string currentUserId =
-                this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                 List<OrderListingViewModel> reservations = this._reservationService.GetReservations()
-                  .Where(o => o.Client.Id == currentUserId)
-                  .Select(item =>new OrderListingViewModel()
-                        {
-                            Id = item.Id,
-                            Name = item.Name,
-                            CreatedOn = item.CreatedOn,
-                            CountProducts = item.CountProducts,
-                            UserId = item.UserId,
-                            ProductId = item.ProductId,
-                             }).ToList();
-                             return View(reservations);
-        }
+        
       
    
 

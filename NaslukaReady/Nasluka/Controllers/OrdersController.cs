@@ -36,13 +36,29 @@ namespace Nasluka.Controllers
                   Id = item.Id,
                   CreatedOn = item.CreatedOn,
                   CountProducts = item.CountProducts,
-                  UserId = item.UserId,
-                  ProductId = item.ProductId,
-                  Product = item.Product
+                  UserName = item.User.UserName,
+                  ProductName = item.Product.Name,
+                  TotalPrice=item.TotalPrice
               }).ToList();
             return View(ordersFromDb);
         }
-
+        public ActionResult My()
+        {
+            string currentUserId =
+           this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            List<OrderListingViewModel> reservations = this._orderService.GetOrders()
+             .Where(o => o.UserId == currentUserId)
+             .Select(item => new OrderListingViewModel()
+             {
+                 Id = item.Id,
+                 CreatedOn = item.CreatedOn,
+                 CountProducts = item.CountProducts,
+                 UserName = item.User.UserName,
+                 ProductName = item.Product.Name,
+                 TotalPrice = item.TotalPrice
+             }).ToList();
+            return View(reservations);
+        }
         // GET: OrdersController/Details/5
         public ActionResult Details(int id)
         {
@@ -153,5 +169,7 @@ namespace Nasluka.Controllers
                 return View();
             }
         }
+
+       
     }
 }

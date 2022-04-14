@@ -19,6 +19,7 @@ namespace Nasluka.Data
             this.Database.EnsureCreated();
         }
         public DbSet<Nasluka.Models.OrderCreateBIndingModel> OrderCreateBIndingModel { get; set; }
+        public DbSet<Nasluka.Models.OrderListingViewModel> OrderListingViewModel { get; set; }
         //public DbSet<Nasluka.Models.ProductAllViewModel> ProductAllViewModel { get; set; }
         //public DbSet<Nasluka.Models.ProductCreateViewModel> ProductCreateViewModel { get; set; }
         //public DbSet<Nasluka.Models.ProductDetailsViewModel> ProductDetailsViewModel { get; set; }
